@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="rose-gold">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Un Regalo Speciale Per Te ❤️ | Messaggi d'Amore</title>
+    <meta name="description"
+        content="Una sorpresa speciale ed elegante con messaggi d'amore e ricordi unici dedicati alla persona più importante della tua vita.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Outfit:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- Dynamic Particle & Confetti Canvas Overlay -->
+    <canvas id="particlesCanvas"></canvas>
+
+    <!-- Initial Screen Overlay: "Mi ami?" -->
+    <div id="loveGateOverlay" class="love-gate-overlay">
+        <div class="love-gate-card">
+            <div class="gate-heart-badge"><i class="fas fa-heart"></i></div>
+            <h1 class="gate-title">Prima di iniziare...</h1>
+            <h2 class="gate-question" id="gateQuestion">Mi ami? ❤️</h2>
+
+            <div class="gate-buttons-container">
+                <button id="btnYes" class="primary-btn gate-btn btn-yes">
+                    <i class="fas fa-heart"></i> Sì, tantissimo!
+                </button>
+                <button id="btnNo" class="gate-btn btn-no">
+                    No 😜
+                </button>
+            </div>
+            <p id="gateNotice" class="gate-notice"></p>
+        </div>
+    </div>
+
+    <!-- Top Action Buttons -->
+    <div class="top-controls">
+        <button id="musicToggleBtn" class="icon-btn" title="Musica di Sottofondo" aria-label="Attiva Musica">
+            <i class="fas fa-music"></i>
+        </button>
+        <button id="settingsToggleBtn" class="icon-btn" title="Personalizza l'Esperienza" aria-label="Personalizza">
+            <i class="fas fa-sliders-h"></i>
+        </button>
+    </div>
+
+    <!-- Main Container -->
+    <div class="app-container">
+
+        <!-- Header / Intro -->
+        <header class="header">
+            <div class="subtitle" id="displaySubtitle">Un momento unico per noi...</div>
+            <h1 class="title" id="displayTitle">Per Te, Amore Mio ❤️</h1>
+            <p class="description" id="displayDescription">
+                Ci sono messaggi e ricordi che meritano di rimanere incisi nel tempo. Clicca per scoprire la tua
+                sorpresa.
+            </p>
+        </header>
+
+        <!-- Interactive 3D Gift Box Area -->
+        <section class="box-section">
+            <div class="box-wrapper" id="ringBoxWrapper" role="button" aria-label="Apri lo scrigno dei ricordi">
+                <div class="box-glow"></div>
+
+                <div class="ring-box-container">
+                    <!-- Lid Top -->
+                    <div class="box-lid">
+                        <div class="box-lid-ribbon"></div>
+                        <div class="box-lid-latch"></div>
+                    </div>
+
+                    <!-- Bottom Box -->
+                    <div class="box-bottom">
+                        <div class="box-cushion">
+                            <div class="cushion-slit"></div>
+                        </div>
+                    </div>
+
+                    <!-- Glowing Heart & Scroll Gift Element -->
+                    <div class="ring-element" id="ringElement">
+                        <div class="diamond-sparkle"></div>
+                        <div class="heart-gift-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Area -->
+            <div class="action-area">
+                <button id="openBoxBtn" class="primary-btn">
+                    <i class="fas fa-envelope"></i> Apri lo Scrigno
+                </button>
+                <div id="engravingDisplay" class="engraving-tag">
+                    <i class="fas fa-heart"></i> Messaggio speciale: "<span id="engravingText">Per Sempre Insieme
+                        ❤️</span>"
+                </div>
+            </div>
+        </section>
+
+        <!-- Content Cards (Love Letter & Timeline) -->
+        <section class="content-sections">
+
+            <!-- Love Letter Glass Card -->
+            <div class="glass-card">
+                <h2 class="section-title">
+                    <i class="fas fa-envelope-open-text"></i> La Mia Lettera Per Te
+                </h2>
+                <div class="letter-box">
+                    <div id="typewriterLetter" class="letter-text">
+                        <!-- Filled dynamically via JS with Typewriter effect -->
+                    </div>
+                    <div class="letter-signature" id="letterSignature">
+                        Con tutto il mio amore, per sempre.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Photo Gallery Glass Card -->
+            <div class="glass-card">
+                <h2 class="section-title">
+                    <i class="fas fa-images"></i> Galleria dei Nostri Ricordi
+                </h2>
+                <div class="photo-gallery-grid" id="photoGalleryGrid">
+                    <!-- Photo cards will be populated dynamically -->
+                </div>
+            </div>
+
+
+        </section>
+
+    </div>
+
+    <!-- Hidden Customization Drawer / Modal -->
+    <div id="settingsModal" class="modal-overlay">
+        <div class="modal-content">
+            <button id="closeSettingsBtn" class="close-btn" aria-label="Chiudi Modal">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2 class="section-title">
+                <i class="fas fa-magic"></i> Personalizza la Sorpresa
+            </h2>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem;">
+                Modifica i contenuti da dedicare alla tua fidanzata. Tutte le modifiche vengono salvate automaticamente!
+            </p>
+
+            <form id="settingsForm" onsubmit="event.preventDefault();">
+                <div class="form-group">
+                    <label for="inputGFName">Nome della tua Fidanzata</label>
+                    <input type="text" id="inputGFName" class="form-control" value="Sofia">
+                </div>
+
+                <div class="form-group">
+                    <label for="inputSubTitle">Sottotitolo iniziale</label>
+                    <input type="text" id="inputSubTitle" class="form-control" value="Un momento unico per noi...">
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEngraving">Messaggio Speciale</label>
+                    <input type="text" id="inputEngraving" class="form-control" value="Per Sempre Insieme ❤️">
+                </div>
+
+                <div class="form-group">
+                    <label for="inputLetter">Testo della Lettera d'Amore</label>
+                    <textarea id="inputLetter"
+                        class="form-control">Sei la persona più speciale che abbia mai incontrato. Ogni giorno trascorso al tuo fianco è un dono inestimabile. Questi messaggi e ricordi sono il simbolo del mio amore infinito e di tutto ciò che desidero costruire al tuo fianco.</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputSignature">Firma della Lettera</label>
+                    <input type="text" id="inputSignature" class="form-control" value="Con tutto il mio amore, Marco">
+                </div>
+
+                <div class="form-group">
+                    <label for="selectTheme">Colore del Tema</label>
+                    <select id="selectTheme" class="form-control">
+                        <option value="rose-gold">Rose Gold & Velvet (Rosa & Velluto)</option>
+                        <option value="emerald">Emerald Romance (Smeraldo Elegante)</option>
+                        <option value="royal-blue">Royal Midnight (Blu Reale & Oro)</option>
+                    </select>
+                </div>
+
+                <div style="margin-top: 1.5rem; display: flex; justify-content: flex-end; gap: 1rem;">
+                    <button id="saveSettingsBtn" class="primary-btn" style="padding: 0.7rem 1.8rem; font-size: 1rem;">
+                        <i class="fas fa-check"></i> Salva e Applica
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main JavaScript Logic -->
+    <script src="app.js"></script>
+</body>
+
+</html>
